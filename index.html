@@ -86,11 +86,11 @@
 <body>
 <div id="sociallocker">
     <div id="sociallocker-links">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https://sailoans.github.io/Entertainment" class="social-1 fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://twitter.com/intent/tweet?url=https://sailoans.github.io/Entertainment&text=" class="social-1 tw" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://pinterest.com/pin/create/button/?url=https://sailoans.github.io/Entertainment&media=&description=" class="social-1 pi" target="_blank"><i class="fab fa-pinterest-p"></i></a>
-        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://sailoans.github.io/Entertainment" class="social-1 in" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://sailoans.github.io/Entertainment%0A" class="social-1 email"><i class="fas fa-envelope"></i></a>
+        <a href="javascript:void(0);" class="social-1 fb" onclick="share('https://www.facebook.com/sharer/sharer.php?u=https://sailoans.github.io/Entertainment')"><i class="fab fa-facebook-f"></i></a>
+        <a href="javascript:void(0);" class="social-1 tw" onclick="share('https://twitter.com/intent/tweet?url=https://sailoans.github.io/Entertainment&text=')"><i class="fab fa-twitter"></i></a>
+        <a href="javascript:void(0);" class="social-1 pi" onclick="share('https://pinterest.com/pin/create/button/?url=https://sailoans.github.io/Entertainment&media=&description=')"><i class="fab fa-pinterest-p"></i></a>
+        <a href="javascript:void(0);" class="social-1 in" onclick="share('https://www.linkedin.com/shareArticle?mini=true&url=https://sailoans.github.io/Entertainment')"><i class="fab fa-linkedin-in"></i></a>
+        <a href="javascript:void(0);" class="social-1 email" onclick="share('mailto:info@example.com?&subject=&cc=&bcc=&body=https://sailoans.github.io/Entertainment%0A')"><i class="fas fa-envelope"></i></a>
     </div>
     <div id="sociallocker-content">
         <a href="https://www.google.com/" id="downloadButton">Download Now</a>
@@ -98,44 +98,21 @@
     <div id="sociallocker-overlay"><i class="fas fa-lock"></i>Unlock content with a social share.</div>
 </div>
 <script>
-    (function () {
-        var sl = document.querySelector("#sociallocker");
-        var slc = document.querySelector("#sociallocker-content");
-        var downloadButton = document.querySelector("#downloadButton");
-        var shared = false; // Flag to track if sharing is completed
-        
-        if (!sl) return;
-        
-        var old_slc_html = slc.innerHTML;
-        
-        slc.innerHTML = slc.innerHTML.replace(/(href=")(.*)(\")/g, "href=\"#\"");
-        
-        sl.querySelectorAll("#sociallocker-links a").forEach(function (ele) {
-            ele.onclick = function (e) {
-                var web_window = window.open(this.href, 'Share Link', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600,top=' + (screen.height / 2 - 300) + ',left=' + (screen.width / 2 - 300));
-                
-                var check_window_close = setInterval(function () {
-                    if (web_window.closed) {
-                        clearInterval(check_window_close);
-                        
-                        // Set the flag to true after sharing
-                        shared = true;
-                        
-                        // Show the download button after sharing
-                        if (shared) {
-                            downloadButton.style.display = "inline-block";
-                            slc.innerHTML = old_slc_html;
-                            document.querySelector("#sociallocker-links").style.display = "none";
-                            document.querySelector("#sociallocker-overlay").style.display = "none";
-                            document.querySelector("#sociallocker-content").style.top = "0";
-                        }
-                    }
-                }, 1000);
-                
-                e.preventDefault();
-            };
-        });
-    })();
+    function share(url) {
+        var web_window = window.open(url, 'Share Link', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600,top=' + (screen.height / 2 - 300) + ',left=' + (screen.width / 2 - 300));
+
+        var check_window_close = setInterval(function () {
+            if (web_window.closed) {
+                clearInterval(check_window_close);
+
+                // Show the download button after sharing
+                document.querySelector("#downloadButton").style.display = "inline-block";
+                document.querySelector("#sociallocker-links").style.display = "none";
+                document.querySelector("#sociallocker-overlay").style.display = "none";
+                document.querySelector("#sociallocker-content").style.top = "0";
+            }
+        }, 1000);
+    }
 </script>
 </body>
 </html>
